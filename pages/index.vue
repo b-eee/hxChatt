@@ -1,75 +1,65 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        hxChatt
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+  <a-layout id="components-layout-demo-top-side">
+    <a-layout-header class="header">
+      <div class="logo" />
+      <a-menu
+        theme="dark"
+        mode="horizontal"
+        :default-selected-keys="['2']"
+        :style="{ lineHeight: '64px' }"
+      >
+        <a-menu-item key="1">
+          nav 1
+        </a-menu-item>
+        <a-menu-item key="2">
+          nav 2
+        </a-menu-item>
+        <a-menu-item key="3">
+          nav 3
+        </a-menu-item>
+      </a-menu>
+    </a-layout-header>
+    <a-layout-content style="padding: 0 50px">
+      <a-breadcrumb style="margin: 16px 0">
+        <a-breadcrumb-item>Home</a-breadcrumb-item>
+        <a-breadcrumb-item>List</a-breadcrumb-item>
+        <a-breadcrumb-item>App</a-breadcrumb-item>
+      </a-breadcrumb>
+      <a-layout style="padding: 24px 0; background: #fff">
+        <a-layout-sider width="200" style="background: #fff">
+          <a-menu
+            mode="inline"
+            :default-selected-keys="['1']"
+            :default-open-keys="['sub1']"
+            style="height: 100%"
+          >
+            <a-sub-menu key="sub1">
+              <span slot="title"><a-icon type="user" />Channels</span>
+              <a-menu-item v-for="chatRoomItem of chatRoomItems" :key="chatRoomItem.i_id">
+                  {{ chatRoomItem.title }}
+              </a-menu-item>
+            </a-sub-menu>
+          </a-menu>
+        </a-layout-sider>
+        <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
+          Content
+        </a-layout-content>
+      </a-layout>
+    </a-layout-content>
+    <a-layout-footer style="text-align: center">
+      Ant Design ©2018 Created by Ant UED
+    </a-layout-footer>
+  </a-layout>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({})
-</script>
-
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+#components-layout-demo-top-side .logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 28px 16px 0;
+  float: left;
 }
 </style>
+
+<script lang="ts" src="./index.ts"></script>
