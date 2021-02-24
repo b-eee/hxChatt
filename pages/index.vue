@@ -35,14 +35,16 @@
           >
             <a-sub-menu key="sub1">
               <span slot="title"><a-icon type="user" />Channels</span>
-              <a-menu-item v-for="chatRoomItem of chatRoomItems" :key="chatRoomItem.i_id">
+              <a-menu-item v-for="chatRoomItem of chatRoomItems" :key="chatRoomItem.i_id" @click="channelOnclick">
                   {{ chatRoomItem.title }}
               </a-menu-item>
             </a-sub-menu>
           </a-menu>
         </a-layout-sider>
         <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
-          Content
+          <ul>
+            <li v-for="message of messages.histories" :key="message.h_id">{{message.history.username}} - '{{message.history.comment}}'</li>
+          </ul>
         </a-layout-content>
       </a-layout>
     </a-layout-content>

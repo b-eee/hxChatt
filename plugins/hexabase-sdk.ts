@@ -1,6 +1,6 @@
 import {Hexabase} from 'hexabase-sdk';
 
 Hexabase.initializeApp({
-    email: 'j.soliva@b-eee.com',
-    password: 'jinpol0405'
+    email: 'j.soliva__33334@b-eee.com',
+    password: 'test'
 })
