@@ -2,7 +2,7 @@ import {Vue, Component, Prop} from 'vue-property-decorator';
 import { Hexabase } from '~/../../react/hexabase-sdk/dist';
 // import {Hexabase} from 'hexabase-sdk';
 import Items from '~/../../react/hexabase-sdk/dist/items/items';
-import { ItemHistories } from '~/../../react/hexabase-sdk/dist/models/histories';
+import { ItemHistories, History as ItemMsgHistory, History2 } from '~/../../react/hexabase-sdk/dist/models/histories';
 import { Item, ItemsResp } from '~/../../react/hexabase-sdk/dist/models/items';
 import { UserInfoResp } from '~/../../react/hexabase-sdk/dist/models/users';
 import { ServerSent } from '~/../../react/hexabase-sdk/dist/services/sso';
@@ -18,11 +18,13 @@ export default class IndexComponent extends Vue {
     sse: ServerSent = {} as ServerSent;
 
     created() {
-        this.fetchData();
-        this.init_sso();
+        this.fetchData().then(() =>
+        {
+            this.init_sso();
+        });
     }
 
-    async fetchData() {
+    async fetchData(): Promise<void> {
         this.currentUser = await Hexabase.users().userInfoAsync();
 
         this.items = new Items()
@@ -45,17 +47,18 @@ export default class IndexComponent extends Vue {
         }
     }
 
-    async channelOnclick(e)
+    async InitChanOnClck(e: any)
     {
-        console.log(e.key)
         this.messages = await this.items.getItemHistories(`chat1`, e.key);
-        console.log(this.messages);
-        this.sse.addEventListener(`item_view_${e.key}_${this.currentUser.u_id}`, e =>
+        this.sse.addEventListener(`item_view_${e.key}_${this.currentUser.u_id}`, (e: any) =>
         {
-            var parsedData = JSON.parse(e.data);
-            console.log(parsedData);
+            this.messages.histories.unshift({
+                history: {
+                    username: e.message.username,
+                    comment: e.message.comment
+                } as History2
+            } as ItemMsgHistory);
         })
-        
     }
 
 }

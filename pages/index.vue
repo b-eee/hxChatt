@@ -2,22 +2,6 @@
   <a-layout id="components-layout-demo-top-side">
     <a-layout-header class="header">
       <div class="logo" />
-      <a-menu
-        theme="dark"
-        mode="horizontal"
-        :default-selected-keys="['2']"
-        :style="{ lineHeight: '64px' }"
-      >
-        <a-menu-item key="1">
-          nav 1
-        </a-menu-item>
-        <a-menu-item key="2">
-          nav 2
-        </a-menu-item>
-        <a-menu-item key="3">
-          nav 3
-        </a-menu-item>
-      </a-menu>
     </a-layout-header>
     <a-layout-content style="padding: 0 50px">
       <a-breadcrumb style="margin: 16px 0">
@@ -35,7 +19,7 @@
           >
             <a-sub-menu key="sub1">
               <span slot="title"><a-icon type="user" />Channels</span>
-              <a-menu-item v-for="chatRoomItem of chatRoomItems" :key="chatRoomItem.i_id" @click="channelOnclick">
+              <a-menu-item v-for="chatRoomItem of chatRoomItems" :key="chatRoomItem.i_id" @click="InitChanOnClck">
                   {{ chatRoomItem.title }}
               </a-menu-item>
             </a-sub-menu>
@@ -43,7 +27,8 @@
         </a-layout-sider>
         <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
           <ul>
-            <li v-for="message of messages.histories" :key="message.h_id">{{message.history.username}} - '{{message.history.comment}}'</li>
+            <li v-for="message of messages.histories" 
+              :key="message.h_id">{{message.history.username}} - '{{message.history.comment}}'</li>
           </ul>
         </a-layout-content>
       </a-layout>
