@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hxchat
+  labels:
+    app: hxchat
+    component: microservice
+spec:
+  selector:
+    matchLabels:
+      app: hxchat
+      component: microservice
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 0
+  progressDeadlineSeconds: 300
+  template:
+    metadata:
+      name: hxchat
+      labels:
+        app: hxchat
+        component: microservice
+    spec:
+      terminationGracePeriodSeconds: 600
+      containers:
+      - name: beee-hxchat
+        image: hexabase.azurecr.io/beee-hxchat
+        env:
+          - name: ENV
+            value: dev
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "30m"
+          limits: {}
+        imagePullPolicy: Always
+        ports:
+        - name: hxchat
+          containerPort: 5005
+        resources: {}
+      nodeSelector:
+        type: node00

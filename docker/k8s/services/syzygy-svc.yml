@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: beee-hxchat
+  labels:
+    app: hxchat
+    component: microservice
+spec:
+  ports:
+  - name: 80-5005
+    port: 5005
+    protocol: TCP
+    targetPort: 5005
+  selector:
+    app: hxchat
+  sessionAffinity: None
+  type: ClusterIP
