@@ -1,6 +1,6 @@
 export default {
   server: {
-    port : 5005
+    port : 5011
   },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -47,11 +47,22 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
   ],
 
+  proxy: {
+    '/linker-api': { 
+      target: 'https://dev-api.hexabase.com',
+      pathRewrite: {
+        '^/linker-api': '/api/v0'
+      }
+    }
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    proxy: true
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

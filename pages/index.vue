@@ -18,7 +18,7 @@
             style="height: 100%"
           >
             <a-sub-menu key="sub1">
-              <span slot="title"><a-icon type="user" />Channels</span>
+              <span slot="title"><a-icon type="user" />Channels 2</span>
               <a-menu-item v-for="chatRoomItem of chatRoomItems" :key="chatRoomItem.i_id" @click="InitChanOnClck">
                   {{ chatRoomItem.title }}
               </a-menu-item>
@@ -26,15 +26,21 @@
           </a-menu>
         </a-layout-sider>
         <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
+          {{ currentChan }}
+          <a-input 
+            @keyup.enter="newMessage"
+            v-model="message"
+            :disabled="currentItemID == ''"
+            placeholder="new message" />
           <ul>
-            <li v-for="message of messages.histories" 
-              :key="message.h_id">{{message.history.username}} - '{{message.history.comment}}'</li>
+            <li v-for="message of messages" 
+              :key="message.id">[{{message.created_at}}] {{message.message}} </li>
           </ul>
         </a-layout-content>
       </a-layout>
     </a-layout-content>
     <a-layout-footer style="text-align: center">
-      Ant Design ©2018 Created by Ant UED
+      Ant Design ©2018 Created by Ant UED22
     </a-layout-footer>
   </a-layout>
 </template>
