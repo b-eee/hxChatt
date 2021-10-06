@@ -34,7 +34,7 @@
             placeholder="new message" />
           <ul>
             <li v-for="message of messages" 
-              :key="message.id">[{{message.created_at}}] {{message.message}} </li>
+              :key="message._id">[{{message.created_at}}] {{message.comment}} </li>
           </ul>
         </a-layout-content>
       </a-layout>

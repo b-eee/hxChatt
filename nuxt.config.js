@@ -52,7 +52,8 @@ export default {
 
   proxy: {
     '/linker-api': { 
-      target: 'https://dev-api.hexabase.com',
+      // target: 'https://dev-api.hexabase.com',
+      target: 'http://localhost:7575',
       pathRewrite: {
         '^/linker-api': '/api/v0'
       }

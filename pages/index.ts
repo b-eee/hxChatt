@@ -1,9 +1,8 @@
 import {Vue, Component, Prop} from 'vue-property-decorator';
-import { Hexabase } from '~/../../react/hexabase-sdk/dist';
-import Items from '~/../../react/hexabase-sdk/dist/items/items';
-import { History as ItemMsgHistory, History2, Item, ItemHistories, UserInfoResp } from '~/../../react/hexabase-sdk/dist/models';
+import {Items} from 'hexabase-sdk/lib';
+import { History as ItemMsgHistory, History2, Item, ItemHistories, UserInfoResp } from 'hexabase-sdk/lib';
 // import { ServerSent } from '~/../../react/hexabase-sdk/dist/services/sso';
-// import {Hexabase} from 'hexabase-sdk';
+import {Hexabase} from 'hexabase-sdk/lib';
 import './index.css';
 
 import * as signalR from "@microsoft/signalr";
@@ -55,6 +54,7 @@ export default class IndexComponent extends Vue {
 
         this.connection = new signalR.HubConnectionBuilder()
         .withUrl("http://localhost:5006/hub")
+        .withAutomaticReconnect()
         .build();
 
         this.connection.start().catch(err => document.write(err));        
@@ -65,8 +65,8 @@ export default class IndexComponent extends Vue {
 
         this.items = new Items()
         let result = await this.items.getItemsAsync({ 
-                project_id: 'chat2_test', 
-                datastore_id: 'chat1_test_db1', 
+                project_id: 'project1', 
+                datastore_id: 'db1', 
                 per_page: 10, 
                 page: 1, 
                 use_display_id: true  
