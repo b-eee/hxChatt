@@ -57,7 +57,27 @@ export default {
       pathRewrite: {
         '^/linker-api': '/api/v0'
       }
-    }
+    },
+    // '/hub': {
+    //   target: 'http://dev-notificatorv2.hexabase.com',
+    //   ws: false
+    // }
+    // '/signalr/hub': {
+    //   target: 'http://localhost:5006',
+    //   ws: false,
+    //   pathRewrite: {
+    //     '^/signalr': '/'
+    //   },
+    //   ws: true
+    // }    
+    '/signalr/hub': {
+      target: 'http://localhost:9002',
+      ws: false,
+      pathRewrite: {
+        '^/signalr': '/'
+      },
+      ws: true
+    }    
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

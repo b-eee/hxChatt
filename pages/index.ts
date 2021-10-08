@@ -51,26 +51,59 @@ export default class IndexComponent extends Vue {
         });
 
         this.chatRoomItems = []
+        this.connectSignalrR();
 
-        this.connection = new signalR.HubConnectionBuilder()
-        .withUrl("http://localhost:5006/hub")
-        .withAutomaticReconnect()
-        .build();
+        // try
+        // {
+        //     this.connection = new signalR.HubConnectionBuilder()
+        //     // .withUrl("http://dev-notificatorv2.hexabase.com/hub")
+        //     .withUrl("/signalr/hub")
+        //     .withAutomaticReconnect()
+        //     .build();
+    
+        //     this.connection.start().catch(err => console.log(err));
+   
+        // } catch(err)
+        // {
+        //     console.error(err)
+        // }
+    }
 
-        this.connection.start().catch(err => document.write(err));        
+    connectSignalrR() {
+        try
+        {
+            this.connection = new signalR.HubConnectionBuilder()
+            // .withUrl("http://dev-notificatorv2.hexabase.com/hub")
+            .withUrl("/signalr/hub")
+            .withAutomaticReconnect()
+            .build();
+    
+            this.connection.start().catch(err => console.log(err));
+   
+        } catch(err)
+        {
+            console.error(err)
+        }        
     }
 
     async fetchData(): Promise<void> {
         this.currentUser = await Hexabase.users().userInfoAsync();
 
         this.items = new Items()
+        // let result = await this.items.getItemsAsync({ 
+        //         project_id: 'project1', 
+        //         datastore_id: 'db1', 
+        //         per_page: 10, 
+        //         page: 1, 
+        //         use_display_id: true  
+        //     })
         let result = await this.items.getItemsAsync({ 
-                project_id: 'project1', 
-                datastore_id: 'db1', 
-                per_page: 10, 
-                page: 1, 
-                use_display_id: true  
-            })
+            project_id: 'newtestproj', 
+            datastore_id: 'newprojectdb2', 
+            per_page: 10, 
+            page: 1, 
+            use_display_id: true  
+        })        
         this.chatRoomItems = result.items
     }
 
@@ -78,7 +111,7 @@ export default class IndexComponent extends Vue {
         console.log(e)
         if(!this.currentItemID) return false;
         // this.connection.invoke('NewMessage', this.message)
-        this.$axios.post(`https://localhost:5005/api/messages/${this.currentChan}`, {
+        this.$axios.post(`/signalr/api/messages/${this.currentChan}`, {
             message: this.message,
             i_id: this.currentItemID
         })
@@ -94,15 +127,16 @@ export default class IndexComponent extends Vue {
     {
         this.currentItemID = e.key;
         this.currentChan = this.channelEventID(e.key);
+        this.messages = []
         // this.messages = this.messageHub[this.currentChan]
 
-        this.$axios.get(`https://localhost:5005/api/messages/${e.key}`).then(
-            res => {
-                this.messages = res.data;
-                // this.messageHub[this.currentChan] = res.data;
-                // console.log(this.messageHub[this.currentChan])
-            }
-        )
+        // this.$axios.get(`/signalr/api/messages/${e.key}`).then(
+        //     res => {
+        //         this.messages = res.data;
+        //         // this.messageHub[this.currentChan] = res.data;
+        //         // console.log(this.messageHub[this.currentChan])
+        //     }
+        // )
     }
 
 }
